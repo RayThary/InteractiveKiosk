@@ -26,6 +26,10 @@ public class ModelViewController : MonoBehaviour, IDragHandler
 
     [SerializeField] private float rotateSpeed;
 
+    private void OnEnable()
+    {
+        resetModel();
+    }
 
     void Start()
     {

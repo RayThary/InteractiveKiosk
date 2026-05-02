@@ -22,7 +22,7 @@ public class FadePanel : MonoBehaviour
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
 
-        yield return Fade(0f, 1f, fadeTime);
+        yield return Fade(0f, 1f, 0.6f);
     }
 
     public IEnumerator FadeIn()

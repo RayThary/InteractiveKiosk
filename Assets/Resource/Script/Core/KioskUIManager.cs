@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -72,12 +73,8 @@ public class KioskUIManager : MonoBehaviour
 
         if (idleTimer >= returnTime)
         {
-            isFading = true;
             idleTimer = 0;
-
-            fadePanel.FadeOut();
-            showPanel(initialPanel);
-            fadePanel.FadeIn();
+            StartCoroutine(fade());
         }
 
     }
@@ -129,6 +126,24 @@ public class KioskUIManager : MonoBehaviour
     {
         detailPanel.GetComponent<DetailPanel>().SetShowName = _showName;
         showPanel(detailPanel);
+    }
+
+    private IEnumerator fade()
+    {
+        if (isFading)
+            yield break;
+
+        isFading = true;
+
+        yield return fadePanel.FadeOut();
+
+        showPanel(initialPanel);
+
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        yield return fadePanel.FadeIn();
+
+        isFading = false;
     }
 
     public void ShowPanelObject(GameObject _gameObject)

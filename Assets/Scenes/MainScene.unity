@@ -830,7 +830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &202986439
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4380,7 +4380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1086230025
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5347,7 +5347,7 @@ GameObject:
   - component: {fileID: 1424221326}
   - component: {fileID: 1424221325}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BackGroundCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5572,6 +5572,7 @@ GameObject:
   - component: {fileID: 1533049331}
   - component: {fileID: 1533049330}
   - component: {fileID: 1533049329}
+  - component: {fileID: 1533049332}
   m_Layer: 5
   m_Name: FadePanel
   m_TagString: Untagged
@@ -5648,6 +5649,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533049327}
   m_CullTransparentMesh: 1
+--- !u!114 &1533049332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533049327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735947caa8beced4a983ce73c33f3a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FadePanel
 --- !u!4 &1544570687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
@@ -7322,8 +7335,8 @@ MonoBehaviour:
   robot: {fileID: 2075679005}
   Artifact: {fileID: 1488097196}
   Planet: {fileID: 747880038}
-  fadePanel: {fileID: 0}
-  returnTime: 30
+  fadePanel: {fileID: 1533049332}
+  returnTime: 3
 --- !u!114 &1957676918
 MonoBehaviour:
   m_ObjectHideFlags: 0
