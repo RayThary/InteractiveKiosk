@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public enum ShowName 
+public enum ShowName
 {
     Robot,
     Artifact,
@@ -20,8 +20,11 @@ public class KioskUIManager : MonoBehaviour
     [SerializeField] private Button Artifact;
     [SerializeField] private Button Planet;
 
+    [SerializeField] private FadePanel fadePanel;
     [SerializeField] private float returnTime = 5;
     private float idleTimer = 0;
+
+    private bool isFading = false;
 
     #region
     //private Button startBtn;
@@ -51,6 +54,8 @@ public class KioskUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isFading) return;
+
         if (initialPanel != null && initialPanel.activeSelf)
         {
             idleTimer = 0f;
@@ -67,8 +72,12 @@ public class KioskUIManager : MonoBehaviour
 
         if (idleTimer >= returnTime)
         {
+            isFading = true;
             idleTimer = 0;
+
+            fadePanel.FadeOut();
             showPanel(initialPanel);
+            fadePanel.FadeIn();
         }
 
     }
@@ -126,5 +135,5 @@ public class KioskUIManager : MonoBehaviour
     {
         showPanel(_gameObject);
     }
-  
+
 }
