@@ -16,6 +16,7 @@ public class DetailPanel : MonoBehaviour
     {
         public ShowName name;
         public string title;
+        [TextArea]
         public string description;
         public GameObject model;
     }

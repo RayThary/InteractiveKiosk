@@ -6,8 +6,6 @@ public class FadePanel : MonoBehaviour
 {
 
     private CanvasGroup canvasGroup;
-    private float fadeTime = 0.3f;
-    
 
     private void Start()
     {
@@ -17,17 +15,17 @@ public class FadePanel : MonoBehaviour
         canvasGroup.interactable = false;
     }
 
-    public IEnumerator FadeOut()
+    public IEnumerator FadeOut(float _fadeTime)
     {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
 
-        yield return Fade(0f, 1f, 0.6f);
+        yield return Fade(0f, 1f, _fadeTime);
     }
 
-    public IEnumerator FadeIn()
+    public IEnumerator FadeIn(float _fadeTime)
     {
-        yield return Fade(1f, 0f, fadeTime);
+        yield return Fade(1f, 0f, _fadeTime);
 
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;

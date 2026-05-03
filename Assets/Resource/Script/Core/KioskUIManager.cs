@@ -135,13 +135,13 @@ public class KioskUIManager : MonoBehaviour
 
         isFading = true;
 
-        yield return fadePanel.FadeOut();
+        yield return fadePanel.FadeOut(0.6f);
 
         showPanel(initialPanel);
 
         yield return new WaitForSecondsRealtime(0.2f);
 
-        yield return fadePanel.FadeIn();
+        yield return fadePanel.FadeIn(0.3f);
 
         isFading = false;
     }
