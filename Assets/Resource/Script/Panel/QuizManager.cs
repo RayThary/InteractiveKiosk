@@ -1,15 +1,23 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuizManager : MonoBehaviour
 {
+    [System.Serializable]
+    private class QuizJsonData
+    {
+        public List<CorrectQuizJsonData> correctQuizDatas = new List<CorrectQuizJsonData>();
+        public List<WrongQuizJsonData> wrongQuizDatas = new List<WrongQuizJsonData>();
+    }
 
     [System.Serializable]
-    private class CorrectQuizData
+    private class CorrectQuizJsonData
     {
-        public ShowName showName;
+        public string showName;
 
         [TextArea]
         public string question;
@@ -18,26 +26,15 @@ public class QuizManager : MonoBehaviour
     }
 
     [System.Serializable]
-    private class WrongQuizData
+    private class WrongQuizJsonData
     {
-        public ShowName showName;
+        public string showName;
 
         public string answerText;
 
         [TextArea]
         public string resultDescription;
     }
-    [Header("Quiz Data")]
-    [SerializeField] private List<CorrectQuizData> correctQuizDatas;
-    [SerializeField] private List<WrongQuizData> wrongQuizDatas;
-
-    [Header("Quiz UI")]
-    [SerializeField] private TextMeshProUGUI questionText;
-    [SerializeField] private List<Button> answerButtons;
-
-    private List<RuntimeAnswerData> currentAnswers = new List<RuntimeAnswerData>();
-    [SerializeField] private ResultPanel resultPanel;
-    private ShowName showName;
 
     private class RuntimeAnswerData
     {
@@ -53,67 +50,126 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    [Header("Json")]
+    [SerializeField] private string quizDataFileName = "QuizData.json";
+
+    [Header("Quiz UI")]
+    [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private List<Button> answerButtons;
+
+    [SerializeField] private ResultPanel resultPanel;
+
+    private QuizJsonData quizJsonData;
+    private List<RuntimeAnswerData> currentAnswers = new List<RuntimeAnswerData>();
+
+    private ShowName showName;
+
+    private void Awake()
+    {
+        LoadQuizData();
+    }
+
+    private void LoadQuizData()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, quizDataFileName);        
+        
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogWarning("QuizData.json 파일을 찾을 수 없습니다: " + filePath);
+            return;
+        }
+
+        //한글지정
+        string json = File.ReadAllText(filePath, Encoding.UTF8);
+        quizJsonData = JsonUtility.FromJson<QuizJsonData>(json);
+
+        if (quizJsonData == null)
+        {
+            Debug.LogWarning("QuizData.json 파싱 실패");
+            return;
+        }
+
+        if (quizJsonData.correctQuizDatas == null || quizJsonData.wrongQuizDatas == null)
+        {
+            Debug.LogWarning("QuizData.json 내부 리스트가 비어 있습니다.");
+            return;
+        }
+    }
+
     public void SetQuiz(ShowName _showName)
     {
         showName = _showName;
-        List<CorrectQuizData> correctList = new List<CorrectQuizData>();
-        List<WrongQuizData> wrongList = new List<WrongQuizData>();
 
-        // 각각 현재 showName 에맞게 정답/오답 추가
-        for (int i = 0; i < correctQuizDatas.Count; i++)
+        if (quizJsonData == null)
         {
-            if (correctQuizDatas[i].showName == _showName)
+            Debug.LogWarning("QuizData가 로드되지 않았습니다.");
+            return;
+        }
+
+        List<CorrectQuizJsonData> correctList = new List<CorrectQuizJsonData>();
+        List<WrongQuizJsonData> wrongList = new List<WrongQuizJsonData>();
+
+        string targetShowName = _showName.ToString();
+
+        for (int i = 0; i < quizJsonData.correctQuizDatas.Count; i++)
+        {
+            if (quizJsonData.correctQuizDatas[i].showName == targetShowName)
             {
-                correctList.Add(correctQuizDatas[i]);
+                correctList.Add(quizJsonData.correctQuizDatas[i]);
             }
         }
 
-        for (int i = 0; i < wrongQuizDatas.Count; i++)
+        for (int i = 0; i < quizJsonData.wrongQuizDatas.Count; i++)
         {
-            if (wrongQuizDatas[i].showName == _showName)
+            if (quizJsonData.wrongQuizDatas[i].showName == targetShowName)
             {
-                wrongList.Add(wrongQuizDatas[i]);
+                wrongList.Add(quizJsonData.wrongQuizDatas[i]);
             }
         }
 
-        // 안전 체크
         if (correctList.Count <= 0)
         {
-            Debug.LogWarning("해당 타입의 정답 데이터가 없습니다: " + _showName);
+            Debug.LogWarning("해당 콘텐츠의 정답 데이터가 없습니다: " + targetShowName);
             return;
         }
 
         if (wrongList.Count < 2)
         {
-            Debug.LogWarning("해당 타입의 오답 데이터가 2개 미만입니다: " + _showName);
+            Debug.LogWarning("해당 콘텐츠의 오답 데이터가 2개 미만입니다: " + targetShowName);
             return;
         }
 
-        // 정답 및 오답 선택
         int correctIndex = Random.Range(0, correctList.Count);
-        CorrectQuizData selectedCorrect = correctList[correctIndex];
+        CorrectQuizJsonData selectedCorrect = correctList[correctIndex];
 
         questionText.text = selectedCorrect.question;
 
         currentAnswers.Clear();
-        currentAnswers.Add(new RuntimeAnswerData(selectedCorrect.answerText, true, "정답입니다. 콘텐츠의 핵심 내용을 잘 이해했습니다."));
+
+        currentAnswers.Add(new RuntimeAnswerData(
+            selectedCorrect.answerText,
+            true,
+            "정답입니다. 콘텐츠의 핵심 내용을 잘 이해했습니다."
+        ));
 
         for (int i = 0; i < 2; i++)
         {
             int wrongIndex = Random.Range(0, wrongList.Count);
-            WrongQuizData selectedWrong = wrongList[wrongIndex];
+            WrongQuizJsonData selectedWrong = wrongList[wrongIndex];
 
-            currentAnswers.Add(new RuntimeAnswerData(selectedWrong.answerText, false, selectedWrong.resultDescription));
+            currentAnswers.Add(new RuntimeAnswerData(
+                selectedWrong.answerText,
+                false,
+                selectedWrong.resultDescription
+            ));
 
             wrongList.RemoveAt(wrongIndex);
         }
 
-        //문제섞기 및 정답 적용
         ShuffleAnswers();
-
         ApplyAnswersToButtons();
     }
-
 
     private void ShuffleAnswers()
     {
@@ -131,6 +187,14 @@ public class QuizManager : MonoBehaviour
     {
         for (int i = 0; i < answerButtons.Count; i++)
         {
+            if (i >= currentAnswers.Count)
+            {
+                answerButtons[i].gameObject.SetActive(false);
+                continue;
+            }
+
+            answerButtons[i].gameObject.SetActive(true);
+
             TextMeshProUGUI buttonText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = currentAnswers[i].answerText;
 
@@ -144,6 +208,7 @@ public class QuizManager : MonoBehaviour
     private void SelectAnswer(int _index)
     {
         RuntimeAnswerData selectedAnswer = currentAnswers[_index];
+
         gameObject.SetActive(false);
 
         resultPanel.SetResult(selectedAnswer.isCorrect, selectedAnswer.resultDescription, showName);
