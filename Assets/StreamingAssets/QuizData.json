@@ -1,36 +1,42 @@
 ﻿{
     "correctQuizDatas": [
-        {
-            "showName": "Robot",
-            "question": "로봇이 전시/산업 현장에서 활용되는 가장 큰 이유는?",
-            "answerText": "반복적이고 정밀한 작업을 안정적으로 수행할 수 있기 때문입니다."
-        },
-        {
-            "showName": "Robot",
-            "question": "로봇이 사람과 함께 작업할 때 중요한 요소는 무엇인가요?",
-            "answerText": "주변 환경을 감지하고 안전하게 동작하는 것입니다."
-        },
-        {
-            "showName": "Artifact",
-            "question": "유물을 전시할 때 가장 중요하게 전달해야 하는 정보는 무엇인가요?",
-            "answerText": "유물의 시대, 용도, 역사적 의미입니다."
-        },
-        {
-            "showName": "Artifact",
-            "question": "유물이 과거 문화를 이해하는 데 도움이 되는 이유는 무엇인가요?",
-            "answerText": "당시 사람들의 생활 방식과 기술 수준을 보여주기 때문입니다."
-        },
-        {
-            "showName": "Planet",
-            "question": "행성을 구분할 때 중요한 기준은 무엇인가요?",
-            "answerText": "크기, 궤도, 구성 성분 같은 특징입니다."
-        },
-        {
-            "showName": "Planet",
-            "question": "행성이 별과 다른 점은 무엇인가요?",
-            "answerText": "스스로 빛을 내지 않고 별의 빛을 반사한다는 점입니다."
-        }
-    ],
+    {
+        "showName": "Robot",
+        "question": "로봇이 전시/산업 현장에서 활용되는 가장 큰 이유는?",
+        "answerText": "반복적이고 정밀한 작업을 안정적으로 수행할 수 있기 때문입니다.",
+        "resultDescription": "정답입니다. 로봇은 반복적이고 정밀한 작업을 안정적으로 수행할 수 있어 전시 안내, 산업 자동화, 위험 작업 보조 등에 활용됩니다."
+    },
+    {
+        "showName": "Robot",
+        "question": "로봇이 사람과 함께 작업할 때 중요한 요소는 무엇인가요?",
+        "answerText": "주변 환경을 감지하고 안전하게 동작하는 것입니다.",
+        "resultDescription": "정답입니다. 사람과 함께 작업하는 로봇은 주변 환경과 사람의 위치를 감지하고, 충돌을 피하며 안전하게 동작하는 것이 중요합니다."
+    },
+    {
+        "showName": "Artifact",
+        "question": "유물을 전시할 때 가장 중요하게 전달해야 하는 정보는 무엇인가요?",
+        "answerText": "유물의 시대, 용도, 역사적 의미입니다.",
+        "resultDescription": "정답입니다. 유물을 전시할 때는 단순한 외형보다 유물이 만들어진 시대, 사용 목적, 역사적 의미를 함께 전달하는 것이 중요합니다."
+    },
+    {
+        "showName": "Artifact",
+        "question": "유물이 과거 문화를 이해하는 데 도움이 되는 이유는 무엇인가요?",
+        "answerText": "당시 사람들의 생활 방식과 기술 수준을 보여주기 때문입니다.",
+        "resultDescription": "정답입니다. 유물은 과거 사람들이 사용한 도구와 흔적을 통해 당시의 생활 방식, 기술 수준, 문화적 특징을 이해하게 해줍니다."
+    },
+    {
+        "showName": "Planet",
+        "question": "행성을 구분할 때 중요한 기준은 무엇인가요?",
+        "answerText": "크기, 궤도, 구성 성분 같은 특징입니다.",
+        "resultDescription": "정답입니다. 행성은 크기, 궤도, 대기, 표면 환경, 구성 성분 등 여러 특징을 기준으로 구분할 수 있습니다."
+    },
+    {
+        "showName": "Planet",
+        "question": "행성이 별과 다른 점은 무엇인가요?",
+        "answerText": "스스로 빛을 내지 않고 별의 빛을 반사한다는 점입니다.",
+        "resultDescription": "정답입니다. 행성은 별처럼 스스로 빛을 내는 천체가 아니라, 별 주위를 공전하며 주로 별의 빛을 반사해 관측됩니다."
+    }
+],
     "wrongQuizDatas": [
         {
             "showName": "Robot",

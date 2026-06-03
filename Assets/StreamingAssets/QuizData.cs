@@ -5,27 +5,23 @@ using UnityEngine;
 [System.Serializable]
 public class QuizData
 {
-    public List<ContentQuizData> contents = new List<ContentQuizData>();
+    public List<CorrectQuizData> correctQuizDatas = new List<CorrectQuizData>();
+    public List<WrongQuizData> wrongQuizDatas = new List<WrongQuizData>();
 }
 
 [System.Serializable]
-public class ContentQuizData
+public class CorrectQuizData
 {
     public string showName;
-    public List<QuestionData> questions = new List<QuestionData>();
+    public string question;
+    public string answerText;
+    public string resultDescription;
 }
 
 [System.Serializable]
-public class QuestionData
+public class WrongQuizData
 {
-    public string questionText;
-    public AnswerData correctAnswer;
-    public List<AnswerData> wrongAnswers = new List<AnswerData>();
-}
-
-[System.Serializable]
-public class AnswerData
-{
+    public string showName;
     public string answerText;
     public string resultDescription;
 }

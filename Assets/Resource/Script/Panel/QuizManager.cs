@@ -23,6 +23,9 @@ public class QuizManager : MonoBehaviour
         public string question;
 
         public string answerText;
+
+        [TextArea]
+        public string resultDescription;
     }
 
     [System.Serializable]
@@ -71,8 +74,8 @@ public class QuizManager : MonoBehaviour
 
     private void LoadQuizData()
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, quizDataFileName);        
-        
+        string filePath = Path.Combine(Application.streamingAssetsPath, quizDataFileName);
+
 
         if (!File.Exists(filePath))
         {
@@ -147,22 +150,14 @@ public class QuizManager : MonoBehaviour
 
         currentAnswers.Clear();
 
-        currentAnswers.Add(new RuntimeAnswerData(
-            selectedCorrect.answerText,
-            true,
-            "정답입니다. 콘텐츠의 핵심 내용을 잘 이해했습니다."
-        ));
+        currentAnswers.Add(new RuntimeAnswerData(selectedCorrect.answerText, true, selectedCorrect.resultDescription));
 
         for (int i = 0; i < 2; i++)
         {
             int wrongIndex = Random.Range(0, wrongList.Count);
             WrongQuizJsonData selectedWrong = wrongList[wrongIndex];
 
-            currentAnswers.Add(new RuntimeAnswerData(
-                selectedWrong.answerText,
-                false,
-                selectedWrong.resultDescription
-            ));
+            currentAnswers.Add(new RuntimeAnswerData(selectedWrong.answerText, false, selectedWrong.resultDescription));
 
             wrongList.RemoveAt(wrongIndex);
         }
